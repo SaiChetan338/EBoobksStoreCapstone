@@ -27,4 +27,9 @@ public class CartController {
     public List<CartItem> getCartItems() {
         return service.getCartItems();
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteItem(@PathVariable String id) {
+        service.deleteItem(id);
+    }
 }

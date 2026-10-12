@@ -1,6 +1,7 @@
 package com.capstone.ebookstore.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,28 @@ public class CartService {
     }
 
     public CartItem addToCart(CartItem item) {
+
+        Optional<CartItem> existing =
+                repository.findByProductId(item.getProductId());
+
+        if (existing.isPresent()) {
+
+            CartItem cartItem = existing.get();
+
+            cartItem.setQuantity(
+                    cartItem.getQuantity() + 1);
+
+            return repository.save(cartItem);
+        }
+
         return repository.save(item);
     }
 
     public List<CartItem> getCartItems() {
         return repository.findAll();
+    }
+
+    public void deleteItem(String id) {
+        repository.deleteById(id);
     }
 }

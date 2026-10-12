@@ -3,100 +3,148 @@ import api from "../services/api";
 import ProductCard from "../components/ProductCard";
 
 function Home() {
-
   const [products, setProducts] = useState([]);
-
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [price, setPrice] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     loadProducts();
   }, []);
 
   const loadProducts = async () => {
-
     const response = await api.get("/products");
-
     setProducts(response.data);
   };
 
-  const addProduct = async () => {
-
-    await api.post("/products", {
-      title,
-      author,
-      price
-    });
-
-    setTitle("");
-    setAuthor("");
-    setPrice("");
-
-    loadProducts();
-  };
-
   const addToCart = async (product) => {
-
     await api.post("/cart", {
       productId: product.id,
       productTitle: product.title,
-      quantity: 1
+      author: product.author,
+      category: product.category,
+      imageUrl: product.imageUrl,
+      price: product.price,
+      quantity: 1,
     });
 
-    alert("Added To Cart");
+    alert("Book added to cart");
   };
 
+  const filteredProducts = products
+    .filter((product) =>
+      selectedCategory === ""
+        ? true
+        : product.category === selectedCategory
+    )
+    .filter((product) =>
+      product.title
+        .toLowerCase()
+        .includes(searchText.toLowerCase())
+    );
+
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="container">
+      <div className="sidebar">
+        <h3>Categories</h3>
 
-      <h1>Home</h1>
+        <p onClick={() => setSelectedCategory("")}>
+          All
+        </p>
 
-      <h2>Add Book</h2>
+        <p
+          onClick={() =>
+            setSelectedCategory("Technology")
+          }
+        >
+          Technology
+        </p>
 
-      <input
-        placeholder="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
+        <p
+          onClick={() =>
+            setSelectedCategory("Business")
+          }
+        >
+          Business
+        </p>
 
-      <br /><br />
+        <p
+          onClick={() =>
+            setSelectedCategory("Self-Help")
+          }
+        >
+          Self-Help
+        </p>
 
-      <input
-        placeholder="Author"
-        value={author}
-        onChange={(e) => setAuthor(e.target.value)}
-      />
+        <p
+          onClick={() =>
+            setSelectedCategory("Novels")
+          }
+        >
+          Novels
+        </p>
 
-      <br /><br />
+        <p
+          onClick={() =>
+            setSelectedCategory("Science")
+          }
+        >
+          Science
+        </p>
 
-      <input
-        placeholder="Price"
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-      />
+        <p
+          onClick={() =>
+            setSelectedCategory("Education")
+          }
+        >
+          Education
+        </p>
+      </div>
 
-      <br /><br />
+      <div className="content">
+        <div
+          style={{
+            backgroundColor: "#1f2937",
+            padding: "30px",
+            borderRadius: "12px",
+            marginBottom: "20px",
+          }}
+        >
+          <h1>Discover Your Next Book</h1>
 
-      <button onClick={addProduct}>
-        Add Book
-      </button>
+          <p>
+            Explore our collection of technology,
+            business, education, self-help,
+            science and novels.
+          </p>
+        </div>
 
-      <hr />
-
-      <h2>Books</h2>
-
-      {products.map((product) => (
-        <ProductCard
-          key={product.id}
-          product={product}
-          addToCart={addToCart}
+        <input
+          className="search-box"
+          placeholder="Search books..."
+          value={searchText}
+          onChange={(e) =>
+            setSearchText(e.target.value)
+          }
         />
-      ))}
 
+        <h2>Book Catalogue</h2>
+
+        <p>
+          {filteredProducts.length} Books Available
+        </p>
+
+        <div className="book-grid">
+          {filteredProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              addToCart={addToCart}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
 
 export default Home;
-

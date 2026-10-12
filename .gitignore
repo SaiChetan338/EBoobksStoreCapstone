@@ -1,0 +1,15 @@
+node_modules/
+target/
+dist/
+.vscode/
+.env
+
+frontend/node_modules/
+frontend/dist/
+
+backend/target/
+
+postman/
+*.postman_collection.json
+*.postman_environment.json
+*.postman_globals.json

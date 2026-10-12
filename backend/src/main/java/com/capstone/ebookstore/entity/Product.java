@@ -11,15 +11,26 @@ public class Product {
 
     private String title;
     private String author;
+    private String category;
+    private String imageUrl;
     private double price;
 
     public Product() {
     }
 
-    public Product(String id, String title, String author, double price) {
+    public Product(
+            String id,
+            String title,
+            String author,
+            String category,
+            String imageUrl,
+            double price) {
+
         this.id = id;
         this.title = title;
         this.author = author;
+        this.category = category;
+        this.imageUrl = imageUrl;
         this.price = price;
     }
 
@@ -45,6 +56,22 @@ public class Product {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public double getPrice() {

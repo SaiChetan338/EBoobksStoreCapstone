@@ -11,15 +11,32 @@ public class CartItem {
 
     private String productId;
     private String productTitle;
+    private String author;
+    private String category;
+    private String imageUrl;
+    private double price;
     private int quantity;
 
     public CartItem() {
     }
 
-    public CartItem(String id, String productId, String productTitle, int quantity) {
+    public CartItem(
+            String id,
+            String productId,
+            String productTitle,
+            String author,
+            String category,
+            String imageUrl,
+            double price,
+            int quantity) {
+
         this.id = id;
         this.productId = productId;
         this.productTitle = productTitle;
+        this.author = author;
+        this.category = category;
+        this.imageUrl = imageUrl;
+        this.price = price;
         this.quantity = quantity;
     }
 
@@ -45,6 +62,38 @@ public class CartItem {
 
     public void setProductTitle(String productTitle) {
         this.productTitle = productTitle;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public int getQuantity() {
